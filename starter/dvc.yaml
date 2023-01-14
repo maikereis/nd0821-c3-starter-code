@@ -1,0 +1,9 @@
+vars:
+  - data: data/census_clean.csv
+  - artifacts: model
+
+stages:
+  train_model: 
+    cmd: python starter/train_model.py --data-filepath ${data} --artifacts-filepath ${artifacts}
+    deps: 
+    - starter/train_model.py
