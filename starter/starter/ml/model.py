@@ -48,7 +48,7 @@ def compute_model_metrics(y, preds):
 
 
 def inference(model, X):
-    """ Run model inferences and return the predictions.
+    """Run model inferences and return the predictions.
 
     Inputs
     ------
@@ -66,12 +66,22 @@ def inference(model, X):
 
 
 def get_performance_on_slices(test, y_test, preds):
-    categorical_columns = test.select_dtypes('object').columns
+    test = test.drop("salary", axis=1)
+    categorical_columns = test.select_dtypes("object").columns
 
+    metrics_on_slices = []
     for col in categorical_columns:
         categories = test[col].unique()
         for cat in categories:
             mask = test[col] == cat
-            compute_metrics(y_test[mask], preds[mas])
-
-
+            results = compute_model_metrics(y_test[mask], preds[mask])
+            metrics_on_slices.append(
+                {
+                    "category": col,
+                    "group": cat,
+                    "precision": results[0],
+                    "recall": results[1],
+                    "f1": results[2],
+                }
+            )
+    return metrics_on_slices

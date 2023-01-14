@@ -1,6 +1,7 @@
 # Script to train machine learning model.
 import argparse
 import pandas as pd
+from pathlib import Path
 from joblib import dump
 from sklearn.model_selection import train_test_split
 from starter.ml.data import process_data
@@ -12,7 +13,7 @@ from starter.ml.model import (
 )
 
 
-def main(data_filepath, artifacts_filepath):
+def main(data_filepath, artifacts_filepath, reports_filepath):
 
     data = pd.read_csv(data_filepath)
 
@@ -35,7 +36,6 @@ def main(data_filepath, artifacts_filepath):
         train, categorical_features=cat_features, label="salary", training=True
     )
 
-    print(encoder)
     X_test, y_test, _, _ = process_data(
         test,
         categorical_features=cat_features,
@@ -47,6 +47,7 @@ def main(data_filepath, artifacts_filepath):
 
     clf = train_model(X_train, y_train)
 
+    Path(artifacts_filepath).mkdir(exist_ok=True)
     dump(encoder, artifacts_filepath + "/preprocess.joblib")
     dump(clf, artifacts_filepath + "/model.joblib")
 
@@ -54,7 +55,23 @@ def main(data_filepath, artifacts_filepath):
 
     metrics = compute_model_metrics(y_test, preds)
 
-    # metrics_on_slices = get_perfomance_on_slices(test, y_test, preds)
+    metrics_on_slices = get_performance_on_slices(test, y_test, preds)
+
+    metrics_on_slices.insert(
+        0,
+        {
+            "category": "all categories",
+            "group": "all groups",
+            "precision": metrics[0],
+            "recall": metrics[1],
+            "f1": metrics[2],
+        },
+    )
+
+    metrics_df = pd.DataFrame.from_records(metrics_on_slices)
+
+    Path(reports_filepath).mkdir(exist_ok=True)
+    metrics_df.to_csv(reports_filepath + "/metrics.csv")
 
 
 if __name__ == "__main__":
@@ -69,6 +86,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "-a",
         "--artifacts-filepath",
+        type=str,
+        help="Path to the trained model and featurize pipeline.",
+    )
+
+    parser.add_argument(
+        "-r",
+        "--reports-filepath",
         type=str,
         help="Path to the trained model and featurize pipeline.",
     )

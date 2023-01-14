@@ -1,9 +1,14 @@
 vars:
   - data: data/census_clean.csv
   - artifacts: model
+  - reports: reports
 
 stages:
   train_model: 
-    cmd: python starter/train_model.py --data-filepath ${data} --artifacts-filepath ${artifacts}
+    cmd: python starter/train_model.py --data-filepath ${data} 
+                                       --artifacts-filepath ${artifacts} 
+                                       --reports-filepath ${reports}
     deps: 
     - starter/train_model.py
+    outs:
+    - ${reports}/metrics.csv
