@@ -12,3 +12,5 @@ stages:
     - starter/train_model.py
     outs:
     - ${reports}/metrics.csv
+    - ${artifacts}/model.joblib
+    - ${artifacts}/preprocess.joblib

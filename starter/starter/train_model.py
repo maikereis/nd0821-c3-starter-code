@@ -87,14 +87,14 @@ if __name__ == "__main__":
         "-a",
         "--artifacts-filepath",
         type=str,
-        help="Path to the trained model and featurize pipeline.",
+        help="Path to the trained model and preprocess pipeline.",
     )
 
     parser.add_argument(
         "-r",
         "--reports-filepath",
         type=str,
-        help="Path to the trained model and featurize pipeline.",
+        help="Path to the reports.",
     )
 
     args = parser.parse_args()
