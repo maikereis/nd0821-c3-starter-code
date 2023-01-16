@@ -1,13 +1,12 @@
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-
 from fastapi import Depends, FastAPI
-from pydantic import BaseModel, Field
-from pathlib import Path
 from joblib import load
-
-from sklearn.pipeline import make_pipeline
+from pydantic import BaseModel, Field
 from sklearn.compose import make_column_transformer
+from sklearn.pipeline import make_pipeline
 
 app = FastAPI()
 
@@ -65,7 +64,7 @@ def root():
     Returns:
         Json: just a message.
     """
-    return {"message": "Hello World"}
+    return {"message": "Hello World!"}
 
 
 @app.post("/inference")
@@ -82,7 +81,7 @@ def inference(data: Data):
     complementary_cols = set(data_df.columns) - set(CAT_FEATURES)
 
     X_num = data_df[list(complementary_cols)]
-    X_cat = encoder.transform(X_cat)
+    X_cat = encoder.transform(X_cat.values)
     X = np.concatenate([X_num, X_cat], axis=1)
 
     pred = model.predict(X)[0]

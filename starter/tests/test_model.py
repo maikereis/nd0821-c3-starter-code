@@ -1,14 +1,14 @@
-import pytest
 import numpy as np
 import pandas as pd
+import pytest
+from sklearn.ensemble import RandomForestClassifier
+
 from starter.ml.model import (
-    train_model,
     compute_model_metrics,
     get_performance_on_slices,
     inference,
+    train_model,
 )
-
-from sklearn.ensemble import RandomForestClassifier
 
 
 def test_train_model_valid_input():

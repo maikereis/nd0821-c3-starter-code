@@ -1,16 +1,14 @@
 # Script to train machine learning model.
 import argparse
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 from joblib import dump
 from sklearn.model_selection import train_test_split
+
 from starter.ml.data import process_data
-from starter.ml.model import (
-    train_model,
-    inference,
-    compute_model_metrics,
-    get_performance_on_slices,
-)
+from starter.ml.model import (compute_model_metrics, get_performance_on_slices,
+                              inference, train_model)
 
 
 def main(data_filepath, artifacts_filepath, reports_filepath):
