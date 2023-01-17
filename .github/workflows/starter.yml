@@ -8,8 +8,9 @@ jobs:
   build:
     name: Build & Test
     runs-on: ubuntu-latest
-    matrix:
-      python-version: ['3.8']
+    strategy:
+      matrix:
+        python-version: ['3.8']
     
     steps:
     - uses: actions/checkout@v2
