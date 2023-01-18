@@ -10,3 +10,4 @@ httpx
 isort
 black
 flake8
+dvc-gdrive
