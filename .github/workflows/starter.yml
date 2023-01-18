@@ -20,6 +20,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: install dependencies
       run: python -m pip install pytest flake8 numpy pandas fastapi requests httpx scikit-learn 
+           pip install -e starter
 
     - name: run flake
       run: flake8 --ignore=E501,W503,W501 starter/sanitycheck.py
