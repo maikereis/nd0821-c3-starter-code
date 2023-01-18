@@ -7,8 +7,12 @@ from joblib import dump
 from sklearn.model_selection import train_test_split
 
 from starter.ml.data import process_data
-from starter.ml.model import (compute_model_metrics, get_performance_on_slices,
-                              inference, train_model)
+from starter.ml.model import (
+    compute_model_metrics,
+    get_performance_on_slices,
+    inference,
+    train_model,
+)
 
 
 def main(data_filepath, artifacts_filepath, reports_filepath):
@@ -17,7 +21,8 @@ def main(data_filepath, artifacts_filepath, reports_filepath):
 
     # Add code to load in the data.
 
-    # Optional enhancement, use K-fold cross validation instead of a train-test split.
+    # Optional enhancement, use K-fold cross validation instead of a
+    # train-test split.
     train, test = train_test_split(data, test_size=0.20)
 
     cat_features = [

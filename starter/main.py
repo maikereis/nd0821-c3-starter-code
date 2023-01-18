@@ -1,13 +1,11 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from joblib import load
-from pydantic import BaseModel, Field
-from sklearn.compose import make_column_transformer
-from sklearn.pipeline import make_pipeline
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -67,8 +65,8 @@ def get_artifact(model_name):
 
 @app.get("/")
 def root():
-    """
-        An endpoint just to check if the API is UP!
+    """An endpoint just to check if the API is UP!
+
     Returns:
         Json: just a message.
     """

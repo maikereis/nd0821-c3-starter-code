@@ -1,10 +1,9 @@
+import json
 import pytest
 from fastapi.testclient import TestClient
 from main import app
 
 client = TestClient(app)
-
-import json
 
 
 @pytest.fixture
@@ -74,6 +73,5 @@ def test_inference_content_type(data):
 def test_inference_invalid_data(invalid_data):
     response = client.post("/inference", json=invalid_data)
     assert response.status_code == 422
-    assert (
-        json.loads(response.text)["detail"][0]["msg"] == "value is not a valid integer"
-    )
+    msg = json.loads(response.text)["detail"][0]["msg"]
+    assert msg == "value is not a valid integer"
