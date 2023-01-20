@@ -5,9 +5,15 @@ stages:
       model --reports-filepath reports
     deps:
     - path: starter/train_model.py
-      md5: 8ba6b34ab6b2974205ae96031207f545
-      size: 2553
+      md5: 0ef9fd57b613b7d06795db13ea67d281
+      size: 2639
     outs:
+    - path: model/model.joblib
+      md5: 3fe3f63ec9baecc660f42d3fac015ab1
+      size: 66018313
+    - path: model/preprocess.joblib
+      md5: b1c90602d756ae7e7493739f242e8c51
+      size: 4157
     - path: reports/metrics.csv
-      md5: fb590ae81ff7c44a59660077729d7584
-      size: 6174
+      md5: 28af6eead27a4255fc4a83cabadc39e1
+      size: 6314
