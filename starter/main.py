@@ -32,20 +32,20 @@ CAT_FEATURES = [
 
 
 class Data(BaseModel):
-    age: int
-    workclass: str
-    fnlgt: int
-    education: str
-    education_num: int
-    marital_status: str
-    occupation: str
-    relationship: str
-    race: str
-    sex: str
-    capital_gain: int
-    capital_loss: int
-    hours_per_week: int
-    native_country: str
+    age: int = 45
+    workclass: str = "State-gov"
+    fnlgt: int = 2334
+    education: str = "Bachelors"
+    education_num: int = 13
+    marital_status: str = "Never-married"
+    occupation: str = "Prof-specialty"
+    relationship: str = "Wife"
+    race: str = "Black"
+    sex: str = "Female"
+    capital_gain: int = 2174
+    capital_loss: int = 0
+    hours_per_week: int = 60
+    native_country: str = "Cuba"
 
 
 mapping = {
