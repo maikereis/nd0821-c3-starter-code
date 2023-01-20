@@ -83,6 +83,7 @@ if __name__ == "__main__":
         "-d",
         "--data-filepath",
         type=str,
+        default="../data/census_clean.csv",
         help="Path to the training model data.",
     )
 
@@ -90,6 +91,7 @@ if __name__ == "__main__":
         "-a",
         "--artifacts-filepath",
         type=str,
+        default="../artifacts",
         help="Path to the trained model and preprocess pipeline.",
     )
 
@@ -97,6 +99,7 @@ if __name__ == "__main__":
         "-r",
         "--reports-filepath",
         type=str,
+        default="../reports",
         help="Path to the reports.",
     )
 
