@@ -16,10 +16,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: iterative/setup-dvc@v1
     - name: Install dependencies
-      run: pip install -U dvc[gdrive] pydrive2
+      run: pip install -r requirements.txt
     
     - name: Get Data
       run: dvc pull
       env: 
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+
+
