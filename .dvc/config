@@ -1,4 +1,7 @@
 [core]
-    remote = storage
-['remote "storage"']
+    remote = drive
+['remote "drive"']
     url = gdrive://1Zqf2b7lyHFo-erze33XkVM6kupB9fs-P
+    gdrive_acknowledge_abuse = true
+    gdrive_client_id = client-id
+    gdrive_client_secret = client-secret
