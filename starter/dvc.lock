@@ -1,19 +1,19 @@
 schema: '2.0'
 stages:
   train_model:
-    cmd: python starter/train_model.py --data-filepath data/census_clean.csv --artifacts-filepath
+    cmd: python starter/train_model.py --data-filepath data/census_clean.csv --model-filepath
       model --reports-filepath reports
     deps:
     - path: starter/train_model.py
-      md5: 0ef9fd57b613b7d06795db13ea67d281
-      size: 2639
+      md5: 7f4e63a7db399302e56f496249962740
+      size: 2615
     outs:
     - path: model/model.joblib
-      md5: 3fe3f63ec9baecc660f42d3fac015ab1
-      size: 66018313
+      md5: 9848de48ef0476e3da40856d9db6cb2b
+      size: 66235753
     - path: model/preprocess.joblib
       md5: b1c90602d756ae7e7493739f242e8c51
       size: 4157
     - path: reports/metrics.csv
-      md5: 28af6eead27a4255fc4a83cabadc39e1
-      size: 6314
+      md5: bc346b660734f222757111adc213a63d
+      size: 6444

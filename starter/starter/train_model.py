@@ -15,7 +15,7 @@ from starter.ml.model import (
 )
 
 
-def main(data_filepath, artifacts_filepath, reports_filepath):
+def main(data_filepath, model_filepath, reports_filepath):
 
     data = pd.read_csv(data_filepath)
 
@@ -50,9 +50,9 @@ def main(data_filepath, artifacts_filepath, reports_filepath):
 
     clf = train_model(X_train, y_train)
 
-    Path(artifacts_filepath).mkdir(exist_ok=True)
-    dump(encoder, artifacts_filepath + "/preprocess.joblib")
-    dump(clf, artifacts_filepath + "/model.joblib")
+    Path(model_filepath).mkdir(exist_ok=True)
+    dump(encoder, model_filepath + "/preprocess.joblib")
+    dump(clf, model_filepath + "/model.joblib")
 
     preds = inference(clf, X_test)
 
@@ -89,9 +89,9 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "-a",
-        "--artifacts-filepath",
+        "--model-filepath",
         type=str,
-        default="../artifacts",
+        default="../model",
         help="Path to the trained model and preprocess pipeline.",
     )
 
