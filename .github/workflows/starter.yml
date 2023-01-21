@@ -17,7 +17,9 @@ jobs:
     - uses: iterative/setup-dvc@v1
     - name: Install dependencies
       run: pip install -U dvc[gdrive] pydrive2
-           dvc pull
+           
+    - name: Get Data
+      run: dvc pull
       env: 
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
