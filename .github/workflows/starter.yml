@@ -14,11 +14,14 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
+      name: Install dependencies
+           
+    
     - name: Install dependencies
       run: pip install -U dvc[gdrive] pydrive2
-           
+
     - uses: iterative/setup-dvc@v1
-    - name: Get Data
+      name: Get Data
       run: dvc pull
       env: 
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
