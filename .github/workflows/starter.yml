@@ -26,6 +26,8 @@ jobs:
       run: flake8 --ignore=E501,W503,W501 starter/sanitycheck.py
     
     - name: dvc pull
+      env: 
+        GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
       run: dvc pull
 
     - name: run pytest
