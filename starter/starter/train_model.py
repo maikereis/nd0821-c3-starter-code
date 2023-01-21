@@ -51,7 +51,8 @@ def main(data_filepath, model_filepath, reports_filepath):
     clf = train_model(X_train, y_train)
 
     Path(model_filepath).mkdir(exist_ok=True)
-    dump(encoder, model_filepath + "/preprocess.joblib")
+    dump(encoder, model_filepath + "/encoder.joblib")
+    dump(lb, model_filepath + "/binarizer.joblib")
     dump(clf, model_filepath + "/model.joblib")
 
     preds = inference(clf, X_test)

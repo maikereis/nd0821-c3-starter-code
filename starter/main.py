@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from fastapi import FastAPI
 from joblib import load
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -31,31 +31,47 @@ CAT_FEATURES = [
 ]
 
 
+def hyphen_to_underscore(field_name):
+    return f"{field_name}".replace("_", "-")
+
+
 class Data(BaseModel):
-    age: int = 45
-    workclass: str = "State-gov"
-    fnlgt: int = 2334
-    education: str = "Bachelors"
-    education_num: int = 13
-    marital_status: str = "Never-married"
-    occupation: str = "Prof-specialty"
-    relationship: str = "Wife"
-    race: str = "Black"
-    sex: str = "Female"
-    capital_gain: int = 2174
-    capital_loss: int = 0
-    hours_per_week: int = 60
-    native_country: str = "Cuba"
+    age: int = Field(..., example=45)
+    capital_gain: int = Field(..., example=2174)
+    capital_loss: int = Field(..., example=0)
+    education: str = Field(..., example="Bachelors")
+    education_num: int = Field(..., example=13)
+    fnlgt: int = Field(..., example=2334)
+    hours_per_week: int = Field(..., example=60)
+    marital_status: str = Field(..., example="Never-married")
+    native_country: str = Field(..., example="Cuba")
+    occupation: str = Field(..., example="Prof-specialty")
+    race: str = Field(..., example="Black")
+    relationship: str = Field(..., example="Wife")
+    sex: str = Field(..., example="Female")
+    workclass: str = Field(..., example="State-gov")
+
+    class Config:
+        alias_generator = hyphen_to_underscore
+        allow_population_by_field_name = True
 
 
-mapping = {
+""" mapping = {
     "education_num": "education-num",
     "marital_status": "marital-status",
     "capital_gain": "capital-gain",
     "capital_loss": "capital-loss",
     "hours_per_week": "hours-per-week",
     "native_country": "native-country",
-}
+} """
+
+
+@app.on_event("startup")
+async def startup_event():
+    global model, encoder, binarizer
+    model = load(ARTIFACTS_DIR / "model.joblib")
+    encoder = load(ARTIFACTS_DIR / "encoder.joblib")
+    binarizer = load(ARTIFACTS_DIR / "binarizer.joblib")
 
 
 def get_artifact(model_name):
@@ -75,13 +91,10 @@ def root():
 
 @app.post("/inference")
 def inference(data: Data):
-    data_dict = data.dict()
-    # replace '_' for '-' in keys names
-    data_dict = {mapping.get(k, k): v for k, v in data_dict.items()}
-    data_df = pd.DataFrame.from_dict(data_dict, orient="index").T
 
-    encoder = get_artifact("preprocess.joblib")
-    model = get_artifact("model.joblib")
+    data_dict = data.dict(by_alias=True)
+
+    data_df = pd.DataFrame.from_dict(data_dict, orient="index").T
 
     X_cat = data_df[CAT_FEATURES]
     complementary_cols = set(data_df.columns) - set(CAT_FEATURES)
@@ -90,9 +103,10 @@ def inference(data: Data):
     X_cat = encoder.transform(X_cat.values)
     X = np.concatenate([X_num, X_cat], axis=1)
 
-    pred = model.predict(X)[0]
+    pred = model.predict(X)
+    value = binarizer.inverse_transform(pred)[0]
 
-    return {f"the model predicted as: {pred}"}
+    return {f"the model predicted as: {value.strip(' ')}"}
 
 
 if __name__ == "__main__":

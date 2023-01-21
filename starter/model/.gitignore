@@ -1,3 +1,5 @@
 
 /model.joblib
 /preprocess.joblib
+/binarizer.joblib
+/encoder.joblib

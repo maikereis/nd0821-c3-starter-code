@@ -13,4 +13,5 @@ stages:
     outs:
     - ${reports}/metrics.csv
     - ${model}/model.joblib
-    - ${model}/preprocess.joblib
+    - ${model}/encoder.joblib
+    - ${model}/binarizer.joblib
