@@ -1,11 +1,15 @@
 import requests
 
+DEBUG = False
+
 
 def main():
-    host = "https://udacity-maike-app.herokuapp.com"
-    predict_uri = f"{host}/inference"
+    if not DEBUG:
+        uri = "https://udacity-maike-app.herokuapp.com/inference"
+    else:
+        uri = "http://127.0.0.1:8000/inference"
 
-    item = {
+    data = {
         "age": 37,
         "workclass": "Private",
         "fnlgt": 284582,
@@ -22,9 +26,9 @@ def main():
         "native-country": "United-States",
     }
 
-    response = requests.post(predict_uri, json=item)
-    print(response.status_code)
-    print(response.json())
+    response = requests.post(uri, json=data)
+    print(f"API status code = {response.status_code}")
+    print(f"API response = {response.json()[0]}")
 
 
 if __name__ == "__main__":
