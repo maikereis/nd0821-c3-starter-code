@@ -2,8 +2,8 @@ import requests
 
 
 def main():
-    host = "https://udacity-app.herokuapp.com"
-    predict_uri = f"{host}/predict"
+    host = "https://udacity-maike-app.herokuapp.com"
+    predict_uri = f"{host}/inference"
 
     item = {
         "age": 37,
