@@ -5,18 +5,18 @@ stages:
       model --reports-filepath reports
     deps:
     - path: starter/train_model.py
-      md5: 1298f468281f3306f5bfbe477e4e063a
-      size: 2663
+      md5: 77465e077de4d79c78679d7bad879061
+      size: 2680
     outs:
     - path: model/binarizer.joblib
-      md5: 8c08130c1c48cd451cd06b206175cf1e
-      size: 455
+      md5: 400e8c695292229b590db35a22466ed0
+      size: 447
     - path: model/encoder.joblib
-      md5: b1c90602d756ae7e7493739f242e8c51
-      size: 4157
+      md5: f87f9c20d1f4059f13d0639afe4e89fe
+      size: 4072
     - path: model/model.joblib
-      md5: e17c38091bd117c7fddd27251d54b596
-      size: 66117673
+      md5: b8bad06fe7b181a6047bb964cee22db0
+      size: 102286201
     - path: reports/metrics.csv
-      md5: 435629a8446666837d19f7d8e2093fde
-      size: 6395
+      md5: 6a55e6eacce435d04f0c164d7b51a9f4
+      size: 6131

@@ -7,24 +7,45 @@ client = TestClient(app)
 
 
 @pytest.fixture
-def data():
-    data = {
-        "age": 35,
+def data_below_50k():
+    data_below_50k = {
+        "age": 50,
         "workclass": "Private",
-        "fnlgt": 77516,
-        "education": "Bachelors",
-        "education_num": 13,
+        "fnlgt": 117037,
+        "education": "4th",
+        "education_num": 4,
+        "marital_status": "Divorced",
+        "occupation": "Transport-moving",
+        "relationship": "Husband",
+        "race": "White",
+        "sex": "Woman",
+        "capital_gain": 0,
+        "capital_loss": 5000,
+        "hours_per_week": 30,
+        "native_country": "United-States",
+    }
+    return data_below_50k
+
+
+@pytest.fixture
+def data_above_50k():
+    data_above_50k = {
+        "age": 40,
+        "workclass": "Private",
+        "fnlgt": 193524,
+        "education": "Doctorate",
+        "education_num": 16,
         "marital_status": "Married-civ-spouse",
-        "occupation": "Exec-managerial",
+        "occupation": "Prof-specialty",
         "relationship": "Husband",
         "race": "White",
         "sex": "Male",
-        "capital_gain": 2174,
+        "capital_gain": 999999,
         "capital_loss": 0,
-        "hours_per_week": 40,
+        "hours_per_week": 60,
         "native_country": "United-States",
     }
-    return data
+    return data_above_50k
 
 
 @pytest.fixture
@@ -56,22 +77,34 @@ def test_root():
 
 def test_root_content_type():
     response = client.get("/")
-    assert response.headers["Content-Type"] == "application/json"
-
-
-def test_inference(data):
-    response = client.post("/inference", json=data)
     assert response.status_code == 200
-    assert "the model predicted as:" in json.loads(response.text)[0]
-
-
-def test_inference_content_type(data):
-    response = client.post("/inference", json=data)
     assert response.headers["Content-Type"] == "application/json"
+
+
+def test_inference_with_data_below_50k(data_below_50k):
+    with TestClient(app) as client:
+        response = client.post("/inference", json=data_below_50k)
+        assert response.status_code == 200
+        assert "the model predicted as: <=50K" == json.loads(response.text)[0]
+
+
+def test_inference_with_data_above_50k(data_above_50k):
+    with TestClient(app) as client:
+        response = client.post("/inference", json=data_above_50k)
+        assert response.status_code == 200
+        assert "the model predicted as: >50K" == json.loads(response.text)[0]
+
+
+def test_inference_content_type(data_below_50k):
+    with TestClient(app) as client:
+        response = client.post("/inference", json=data_below_50k)
+        assert response.status_code == 200
+        assert response.headers["Content-Type"] == "application/json"
 
 
 def test_inference_invalid_data(invalid_data):
-    response = client.post("/inference", json=invalid_data)
-    assert response.status_code == 422
-    msg = json.loads(response.text)["detail"][0]["msg"]
-    assert msg == "value is not a valid integer"
+    with TestClient(app) as client:
+        response = client.post("/inference", json=invalid_data)
+        assert response.status_code == 422
+        msg = json.loads(response.text)["detail"][0]["msg"]
+        assert msg == "value is not a valid integer"
