@@ -30,19 +30,19 @@ def data_below_50k():
 @pytest.fixture
 def data_above_50k():
     data_above_50k = {
-        "age": 40,
+        "age": 35,
         "workclass": "Private",
         "fnlgt": 193524,
         "education": "Doctorate",
-        "education_num": 16,
+        "education_num": 18,
         "marital_status": "Married-civ-spouse",
         "occupation": "Prof-specialty",
         "relationship": "Husband",
         "race": "White",
         "sex": "Male",
-        "capital_gain": 999999,
+        "capital_gain": 9999,
         "capital_loss": 0,
-        "hours_per_week": 60,
+        "hours_per_week": 40,
         "native_country": "United-States",
     }
     return data_above_50k
