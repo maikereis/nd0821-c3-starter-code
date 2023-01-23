@@ -109,7 +109,7 @@ def inference(data: Data):
     return {f"the model predicted as: {value.strip(' ')}"}
 
 
-if __name__ == "__main__":
-    import uvicorn
+# if __name__ == "__main__":
+#    import uvicorn
 
-    uvicorn.run("main:app", host="127.0.0.1", reload=True, port=8000)
+#    uvicorn.run("main:app", host="127.0.0.1", reload=True, port=8000)
